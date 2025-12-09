@@ -1,0 +1,100 @@
+[
+  {
+    "id": 1,
+    "title": "Zapatillas Nike Running",
+    "description": "Zapatillas para running con buena amortiguacion, ideales para entrenar",
+    "code": "ZAP-001",
+    "price": 45990,
+    "status": true,
+    "stock": 15,
+    "category": "running",
+    "thumbnails": [
+      "/images/zapatillas-nike-1.jpg"
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Pelota de Futbol Adidas",
+    "description": "Pelota de futbol numero 5 oficial para partidos",
+    "code": "BAL-002",
+    "price": 18500,
+    "status": true,
+    "stock": 25,
+    "category": "futbol",
+    "thumbnails": [
+      "/images/pelota-adidas.jpg"
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Raqueta de Tenis Wilson",
+    "description": "Raqueta profesional para adultos principiantes",
+    "code": "RAQ-003",
+    "price": 67000,
+    "status": true,
+    "stock": 8,
+    "category": "tenis",
+    "thumbnails": [
+      "/images/raqueta-wilson.jpg"
+    ]
+  },
+  {
+    "id": 4,
+    "title": "Guantes de Boxeo",
+    "description": "Guantes de boxeo 12oz para entrenamiento y sparring",
+    "code": "GUA-004",
+    "price": 32000,
+    "status": true,
+    "stock": 12,
+    "category": "boxeo",
+    "thumbnails": []
+  },
+  {
+    "id": 5,
+    "title": "Bicicleta de Montaña",
+    "description": "Bicicleta MTB rodado 29 con suspension delantera",
+    "code": "BIC-005",
+    "price": 350000,
+    "status": true,
+    "stock": 5,
+    "category": "ciclismo",
+    "thumbnails": [
+      "/images/bici-montana.jpg"
+    ]
+  },
+  {
+    "id": 6,
+    "title": "Pesas de Mano 5kg",
+    "description": "Par de mancuernas de 5kg cada una para ejercicios en casa",
+    "code": "PES-006",
+    "price": 15900,
+    "status": true,
+    "stock": 30,
+    "category": "gym",
+    "thumbnails": []
+  },
+  {
+    "id": 7,
+    "title": "Camiseta Seleccion Chile",
+    "description": "Camiseta oficial de la seleccion chilena talla M",
+    "code": "CAM-007",
+    "price": 42000,
+    "status": true,
+    "stock": 20,
+    "category": "futbol",
+    "thumbnails": [
+      "/images/camiseta-chile.jpg"
+    ]
+  },
+  {
+    "id": 8,
+    "title": "Colchoneta Yoga",
+    "description": "Colchoneta antideslizante para yoga y pilates",
+    "code": "COL-008",
+    "price": 12000,
+    "status": true,
+    "stock": 18,
+    "category": "fitness",
+    "thumbnails": []
+  }
+]

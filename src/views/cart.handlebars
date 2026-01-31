@@ -1,0 +1,129 @@
+<h1>Mi Carrito</h1>
+
+{{#if carrito.products}}
+    {{#if carrito.products.length}}
+        <div style="margin-bottom: 2rem;">
+            <table style="width: 100%; border-collapse: collapse; background: white;">
+                <thead style="background-color: #333; color: white;">
+                    <tr>
+                        <th style="padding: 1rem; text-align: left;">Producto</th>
+                        <th style="padding: 1rem; text-align: center;">Precio</th>
+                        <th style="padding: 1rem; text-align: center;">Cantidad</th>
+                        <th style="padding: 1rem; text-align: center;">Subtotal</th>
+                        <th style="padding: 1rem; text-align: center;">Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each carrito.products}}
+                        <tr style="border-bottom: 1px solid #ddd;">
+                            <td style="padding: 1rem;">
+                                {{#if this.product}}
+                                    {{this.product.title}}
+                                {{else}}
+                                    Producto no disponible
+                                {{/if}}
+                            </td>
+                            <td style="padding: 1rem; text-align: center;">
+                                {{#if this.product}}
+                                    ${{this.product.price}}
+                                {{/if}}
+                            </td>
+                            <td style="padding: 1rem; text-align: center;">
+                                <input type="number" value="{{this.quantity}}" min="1" onchange="actualizarCantidad('{{../carrito._id}}', '{{this.product._id}}', this.value)" style="width: 60px; padding: 0.5rem; text-align: center;">
+                            </td>
+                            <td style="padding: 1rem; text-align: center;">
+                                {{#if this.product}}
+                                    ${{multiply this.product.price this.quantity}}
+                                {{/if}}
+                            </td>
+                            <td style="padding: 1rem; text-align: center;">
+                                <button onclick="eliminarProducto('{{../carrito._id}}', '{{this.product._id}}')" style="padding: 0.5rem 1rem; background-color: #d32f2f; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                                    Eliminar
+                                </button>
+                            </td>
+                        </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+
+        <div style="background: white; padding: 1.5rem; border-radius: 8px; max-width: 400px; margin-left: auto;">
+            <h3>Total del Carrito</h3>
+            <p style="font-size: 1.5rem; color: #4CAF50; font-weight: bold;">
+                ${{calcularTotal carrito.products}}
+            </p>
+            <button onclick="vaciarCarrito('{{carrito._id}}')" style="width: 100%; padding: 0.7rem; background-color: #d32f2f; color: white; border: none; border-radius: 4px; cursor: pointer; margin-top: 1rem;">
+                Vaciar Carrito
+            </button>
+        </div>
+    {{else}}
+        <p>Tu carrito está vacío</p>
+        <a href="/" style="color: #4CAF50; text-decoration: none;">Ir a comprar</a>
+    {{/if}}
+{{else}}
+    <p>Tu carrito está vacío</p>
+    <a href="/" style="color: #4CAF50; text-decoration: none;">Ir a comprar</a>
+{{/if}}
+
+<a href="/" style="display: inline-block; margin-top: 2rem; color: #666; text-decoration: none;">
+    ← Volver al inicio
+</a>
+
+<script>
+// actualizar cantidad de producto
+async function actualizarCantidad(carritoId, productoId, cantidad) {
+    try {
+        const res = await fetch(`/api/carts/${carritoId}/products/${productoId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ quantity: parseInt(cantidad) })
+        });
+
+        if (res.ok) {
+            location.reload();
+        } else {
+            alert('Error al actualizar cantidad');
+        }
+    } catch (error) {
+        alert('Error: ' + error.message);
+    }
+}
+
+// eliminar producto del carrito
+async function eliminarProducto(carritoId, productoId) {
+    if (confirm('¿Estás seguro de que quieres eliminar este producto?')) {
+        try {
+            const res = await fetch(`/api/carts/${carritoId}/products/${productoId}`, {
+                method: 'DELETE'
+            });
+
+            if (res.ok) {
+                location.reload();
+            } else {
+                alert('Error al eliminar producto');
+            }
+        } catch (error) {
+            alert('Error: ' + error.message);
+        }
+    }
+}
+
+// vaciar carrito
+async function vaciarCarrito(carritoId) {
+    if (confirm('¿Estás seguro de que quieres vaciar el carrito?')) {
+        try {
+            const res = await fetch(`/api/carts/${carritoId}`, {
+                method: 'DELETE'
+            });
+
+            if (res.ok) {
+                location.reload();
+            } else {
+                alert('Error al vaciar carrito');
+            }
+        } catch (error) {
+            alert('Error: ' + error.message);
+        }
+    }
+}
+</script>

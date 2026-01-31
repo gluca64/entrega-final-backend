@@ -20,6 +20,8 @@ mongoose.connect('mongodb+srv://gldonaggio:Shi6mime@cluster0.njmncrt.mongodb.net
 
 // configurar handlebars con helpers
 app.engine('handlebars', engine({
+    allowProtoMethodsByDefault: true,
+    allowProtoPropertiesByDefault: true,
     helpers: {
         multiply: (a, b) => a * b,
         calcularTotal: (productos) => {

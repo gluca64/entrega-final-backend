@@ -19,13 +19,13 @@
     <div class="products-grid">
         {{#each payload}}
             <div class="product-card">
-                <h3>{{this.title}}</h3>
-                <p>{{this.description}}</p>
-                <span class="category">{{this.category}}</span>
-                <div class="price">${{this.price}}</div>
-                <p class="stock">Stock: {{this.stock}}</p>
-                <p>Código: {{this.code}}</p>
-                <a href="/product/{{this._id}}" style="display: inline-block; margin-top: 0.5rem; color: #4CAF50; text-decoration: none;">
+                <h3>{{title}}</h3>
+                <p>{{description}}</p>
+                <span class="category">{{category}}</span>
+                <div class="price">${{price}}</div>
+                <p class="stock">Stock: {{stock}}</p>
+                <p>Código: {{code}}</p>
+                <a href="/product/{{_id}}" style="display: inline-block; margin-top: 0.5rem; color: #4CAF50; text-decoration: none;">
                     Ver detalles
                 </a>
             </div>

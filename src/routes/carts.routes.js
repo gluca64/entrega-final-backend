@@ -22,6 +22,7 @@ router.get('/:cid', async (req, res) => {
     try {
         const { cid } = req.params;
         
+        // populate para traer todos los datos del producto, no solo el id
         const carrito = await Cart.findById(cid).populate('products.product');
         
         if (!carrito) {
@@ -39,26 +40,24 @@ router.post('/:cid/product/:pid', async (req, res) => {
     try {
         const { cid, pid } = req.params;
         
-        // verificar que el producto exista
         const producto = await Product.findById(pid);
         if (!producto) {
             return res.status(404).json({ status: 'error', message: 'Producto no encontrado' });
         }
 
-        // buscar el carrito
         const carrito = await Cart.findById(cid);
         if (!carrito) {
             return res.status(404).json({ status: 'error', message: 'Carrito no encontrado' });
         }
 
-        // verificar si el producto ya esta en el carrito
+        // revisar si el producto ya esta en el carrito
         const productoEnCarrito = carrito.products.find(p => p.product.toString() === pid);
 
         if (productoEnCarrito) {
             // si existe, aumentar cantidad
             productoEnCarrito.quantity += 1;
         } else {
-            // si no existe, agregarlo
+            // si no existe, agregarlo nuevo
             carrito.products.push({
                 product: pid,
                 quantity: 1

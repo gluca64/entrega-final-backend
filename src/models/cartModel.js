@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const cartSchema = new mongoose.Schema({
     products: [
         {
+            // referencia al modelo Product para usar populate
             product: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'Product',
@@ -18,7 +19,6 @@ const cartSchema = new mongoose.Schema({
     ]
 }, { timestamps: true });
 
-// crear modelo
 const Cart = mongoose.model('Cart', cartSchema);
 
 module.exports = Cart;

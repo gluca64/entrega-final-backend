@@ -13,15 +13,15 @@ router.get('/', async (req, res) => {
     try {
         const { limit = 10, page = 1, sort, query } = req.query;
         
-        // convertir a numeros
         const limitNum = parseInt(limit);
         const pageNum = parseInt(page);
+        // calcular cuantos documentos saltar segun la pagina
         const skip = (pageNum - 1) * limitNum;
 
-        // crear filtro
+        // armar filtro dinamico
         let filtro = {};
         if (query) {
-            // buscar por categoria o disponibilidad
+            // buscar en categoria con regex para no ser exacto
             filtro = {
                 $or: [
                     { category: { $regex: query, $options: 'i' } },
@@ -34,7 +34,7 @@ router.get('/', async (req, res) => {
             }
         }
 
-        // crear objeto de ordenamiento
+        // ordenamiento por precio
         let ordenamiento = {};
         if (sort) {
             if (sort === 'asc') {
@@ -44,25 +44,23 @@ router.get('/', async (req, res) => {
             }
         }
 
-        // obtener total de documentos para paginacion
+        // contar total para saber cuantas paginas hay
         const totalProductos = await Product.countDocuments(filtro);
         const totalPaginas = Math.ceil(totalProductos / limitNum);
 
-        // obtener productos
         const productos = await Product.find(filtro)
             .sort(ordenamiento)
             .limit(limitNum)
             .skip(skip);
 
-        // validar pagina anterior y siguiente
+        // validar si hay pagina anterior y siguiente
         const hasPrevPage = pageNum > 1;
         const hasNextPage = pageNum < totalPaginas;
 
-        // crear links
+        // armar los links para navegar entre paginas
         const prevLink = hasPrevPage ? `/api/products?page=${pageNum - 1}&limit=${limitNum}${sort ? `&sort=${sort}` : ''}${query ? `&query=${query}` : ''}` : null;
         const nextLink = hasNextPage ? `/api/products?page=${pageNum + 1}&limit=${limitNum}${sort ? `&sort=${sort}` : ''}${query ? `&query=${query}` : ''}` : null;
 
-        // respuesta con formato requerido
         res.json({
             status: 'success',
             payload: productos,

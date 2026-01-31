@@ -36,7 +36,8 @@ router.get('/', async (req, res) => {
         const productos = await Product.find(filtro)
             .sort(ordenamiento)
             .limit(limitNum)
-            .skip(skip);
+            .skip(skip)
+            .lean();
 
         const hasPrevPage = pageNum > 1;
         const hasNextPage = pageNum < totalPaginas;
@@ -69,7 +70,7 @@ router.get('/', async (req, res) => {
 router.get('/product/:pid', async (req, res) => {
     try {
         const { pid } = req.params;
-        const producto = await Product.findById(pid);
+        const producto = await Product.findById(pid).lean();
 
         if (!producto) {
             return res.status(404).send('Producto no encontrado');
@@ -88,7 +89,7 @@ router.get('/product/:pid', async (req, res) => {
 router.get('/cart/:cid', async (req, res) => {
     try {
         const { cid } = req.params;
-        const carrito = await Cart.findById(cid).populate('products.product');
+        const carrito = await Cart.findById(cid).populate('products.product').lean();
 
         if (!carrito) {
             return res.status(404).send('Carrito no encontrado');

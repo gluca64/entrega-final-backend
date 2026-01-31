@@ -9,15 +9,14 @@ const socketHandlers = require('./managers/socketManager');
 const app = express();
 const PORT = 8080;
 
-// conectar a mongodb
-mongoose.connect('mongodb://localhost:27017/tiendadeportiva', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-}).then(() => {
-    console.log('Conectado a MongoDB');
-}).catch(err => {
-    console.log('Error conectar a MongoDB:', err);
-});
+// conectar a mongodb atlas
+mongoose.connect('mongodb+srv://gldonaggio:Shi6mime@cluster0.njmncrt.mongodb.net/tiendadeportiva?retryWrites=true&w=majority')
+    .then(() => {
+        console.log('Conectado a MongoDB Atlas');
+    })
+    .catch(err => {
+        console.log('Error conectar a MongoDB:', err.message);
+    });
 
 // configurar handlebars con helpers
 app.engine('handlebars', engine({
